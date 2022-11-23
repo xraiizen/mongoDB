@@ -144,7 +144,7 @@ if(index==1){
       FormAdd += '    <label for="fquantite" class="formbuilder-text-label">quantité</label>'
       FormAdd += '    <input type="text" class="form-control" name="fquantite" access="false" id="fquantite">'
       FormAdd += '</div>'
-      FormAdd += '<INPUT   id="reload" TYPE="submit" NAME="nom" VALUE=" Envoyer" onclick="setAliment(this)">'
+      FormAdd += '<INPUT   id="reload" TYPE="submit" NAME="nom" VALUE=" Envoyer" onclick="setPlat(this)">'
       FormAdd += '</div>';
     contentForm.innerHTML = FormAdd;
   }
@@ -160,9 +160,9 @@ function eduIngredient_fields() {
   
    
     
-    let str = '<div class="input-group">'
+    let str = '<div id="'+room+'" class="input-group">'
     str += '<select class="form-control" id="eduIngredient" name="eduIngredient[]">'
-    str += '<option value="">Ingredient</option>'
+    str += '<option  value="">Ingredient</option>'
     <?php foreach($aliments as $aliment){ ?>
     str += '<option value="<?php echo  $aliment->_id?>"><?php echo  $aliment->nom?></option>'
     <?php }?>

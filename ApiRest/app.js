@@ -57,22 +57,178 @@ app.use(bodyParser.json());
 app.use(cors({
     origin: 'http://localhost'
 }));
+var swaggerJSDoc = require('swagger-jsdoc');
+var swaggerUi = require('swagger-ui-express');
+var swaggerDefinition = {
+    openapi: '3.0.0',
+    info: {
+        title: 'Express API for JSONPlaceholder',
+        version: '1.0.0',
+        description: 'This is a REST API application made with Express. It retrieves data from JSONPlaceholder.'
+    },
+    servers: [{
+            url: 'http://localhost:3000/',
+            description: 'Development server',
+        }]
+};
+var options = {
+    swaggerDefinition: swaggerDefinition,
+    // Paths to files containing OpenAPIdefinitions
+    apis: ['./*.js', './controller/*.js'],
+};
+var swaggerSpec = swaggerJSDoc(options);
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 //HOME
+/**
+ * @swagger
+ * /:
+ *   get:
+ *     summary: Returns 🏠
+ *     tags: [🏠]
+ *     responses:
+ *       200:
+ *         description: la route principal 🏠
+ */
 app.get('/', function (req, res) { return res.send('🏠'); });
 // ALIMENTS
+/**
+ * @swagger
+ * /Aliments:
+ *   get:
+ *     summary: retourne les Aliments
+ *     tags: [Aliments]
+ *     responses:
+ *       200:
+ *         description: retourne tous les aliments enregistrer en base
+ */
 app.get('/Aliments', function (req, res) { return controllerAliment_1.ControlerAliment.getAliments(req, res); });
+/**
+ * @swagger
+ * /Aliments:
+ *   post:
+ *     summary: insert un Aliment
+ *     tags: [Aliments]
+ *     parameters:
+ *       - in : path
+ *         nom: nom
+ *         type: type
+ *         quantite: quantite
+ *     responses:
+ *       200:
+ *         description: insert un Aliment
+ */
 app.post("/Aliments", function (req, res) { return controllerAliment_1.ControlerAliment.insertAliment(req, res); });
+/**
+ * @swagger
+ * /Aliments/:id:
+ *   get:
+ *     summary: voir un Aliment
+ *     tags: [Aliments]
+ *     responses:
+ *       201:
+ *         description: voir un Aliment
+ */
 app.get('/Aliments/:id', function (req, res) { return controllerAliment_1.ControlerAliment.getOnAliment(req, res); });
+/**
+ * @swagger
+ * /Aliments/:id:
+ *   put:
+ *     summary: modifier un Aliment
+ *     tags: [Aliments]
+ *     responses:
+ *       200:
+ *         description: modifier un Aliment
+ */
 app.put('/Aliments/:id', function (req, res) { return controllerAliment_1.ControlerAliment.updateAliment(req, res); });
 app.patch('/Aliments/:id', function (req, res) { return controllerAliment_1.ControlerAliment.patchQuantiteAliment(req, res); });
+/**
+ * @swagger
+ * /Aliments/:id:
+ *   delete:
+ *     summary: supprimer un Aliment
+ *     tags: [Aliments]
+ *     responses:
+ *       200:
+ *         description: supprimer un Aliment
+ */
 app.delete('/Aliments/:id', function (req, res) { return controllerAliment_1.ControlerAliment.deleteAliment(req, res); });
+/**
+ * @swagger
+ * /Aliments/Type/:type:
+ *   get:
+ *     summary: retourne les aliments par type
+ *     tags: [Aliments]
+ *     responses:
+ *       200:
+ *         description: retourne les aliments par type
+ */
 app.get('/Aliments/Type/:type', function (req, res) { return controllerAliment_1.ControlerAliment.getAlimentsByType(req, res); });
 // PLATS
+/**
+ * @swagger
+ * /Plats:
+ *   get:
+ *     summary: retoune les Plats
+ *     tags: [Plats]
+ *     responses:
+ *       200:
+ *         description: retoune les Plats
+ */
 app.get('/Plats', function (req, res) { return controllerPlat_1.ControlerPlat.getPlats(req, res); });
+/**
+ * @swagger
+ * /Plats:
+ *   post:
+ *     summary: insert un Plat
+ *     tags: [Plats]
+ *     responses:
+ *       200:
+ *         description: insert un Plat
+ */
 app.post("/Plats", function (req, res) { return controllerPlat_1.ControlerPlat.insertPlat(req, res); });
+/**
+ * @swagger
+ * /Plats/:id:
+ *   get:
+ *     summary: voir un Plat
+ *     tags: [Plats]
+ *     responses:
+ *       201:
+ *         description: voir un Plat
+ */
 app.get('/Plats/:id', function (req, res) { return controllerPlat_1.ControlerPlat.getOnPlat(req, res); });
+/**
+ * @swagger
+ * /Plats/:id:
+ *   put:
+ *     summary: modifier un Plat
+ *     tags: [Plats]
+ *     responses:
+ *       200:
+ *         description: modifier un Plat
+ */
 app.put('/Plats/:id', function (req, res) { return controllerPlat_1.ControlerPlat.updatePlat(req, res); });
+/**
+ * @swagger
+ * /Plats/:id:
+ *   delete:
+ *     summary: supprimer un plat
+ *     tags: [Plats]
+ *     responses:
+ *       200:
+ *         description: supprimer un plat
+ */
 app.delete('/Plats/:id', function (req, res) { return controllerPlat_1.ControlerPlat.deletePlat(req, res); });
+/**
+ * @swagger
+ * /Plats/Type/:type:
+ *   get:
+ *     summary: retourne les plats par type
+ *     tags: [Plats]
+ *     responses:
+ *       200:
+ *         description: retourne les plats par type
+ */
 app.get('/Plats/Type/:type', function (req, res) { return controllerPlat_1.ControlerPlat.getPlatsByType(req, res); });
 app.listen(3000, function () {
     "Serveur listening on port :3000";
@@ -81,8 +237,11 @@ function main() {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, mongoose.connect('mongodb://localhost/Gestion_stock')];
+                case 0: 
+                // await mongoose.connect('mongodb://localhost/Gestion_stock');
+                return [4 /*yield*/, mongoose.connect('mongodb://0.0.0.0:27017/Gestion_stock')];
                 case 1:
+                    // await mongoose.connect('mongodb://localhost/Gestion_stock');
                     _a.sent();
                     console.log("Connexion mongoose ok");
                     return [2 /*return*/];

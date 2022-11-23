@@ -14,7 +14,7 @@
 <body>
 </body>
 <a href="gestionStock.php">vue admin</a>
-<a href="#">vue client</a>
+<a href="client.php">vue client</a>
 </html>
 <script>
 </script>

@@ -69,3 +69,47 @@ function updateAliment(form) {
           location.reload();
         }});
     }
+
+    function setPlat(form) {
+      const formData = new FormData();
+      var object = {};
+      var name = document.getElementById('fnom').value;
+      var ingredients = document.getElementById('eduIngredient[]');
+      var quantite = document.getElementById('fquantite').value;
+      var URL = 'http://localhost:3000/Plats';
+      formData.append("nom", name);
+      formData.append("aliments", ingredients);
+      formData.append("quantite", quantite);
+      formData.forEach(function(value, key){
+          object[key] = value;
+      });
+      console.dir(object);
+      console.dir(ingredients);
+        // $.ajax({
+        //   url: URL,
+        //   type: "POST",
+        //   data: JSON.stringify(object),
+        //   contentType: "application/json",
+        //   success: function(data) {
+        //     console.log('success --> data :', data);
+        //     $('#displayForm').removeClass('is-active');
+        //     location.reload();
+        //     $
+        //   }});
+      }
+
+      function updatePlat(form) {
+        var object = {"quantite" : 5 };
+        var id = document.getElementById('plat').value;
+        var URL = 'http://localhost:3000/Plats/'+id;
+        $.ajax({
+          url: URL,
+          type: "PUT",
+          data: object,
+          contentType: "application/json",
+          success: function(data) {
+              data.quantite = data.quantite -1
+              console.log('success --> data :', data.quantite );
+              // location.reload();
+            }});
+        }

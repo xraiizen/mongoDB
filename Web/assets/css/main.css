@@ -451,14 +451,13 @@ body {
 
 .rendered-form {
 	display: flex;
-	flex-direction: column;
-	align-items: center;
+    flex-direction: column;
+    align-items: baseline;
 }
 
 .rendered-form .form-group {
 	width: 100%;
-	padding: 10px 14px;
-	margin: 5px;
+	padding: 5px 14px;
 	border-radius: 14px;
 	display: flex;
 	justify-content: flex-end;
@@ -522,14 +521,14 @@ input[type=submit]:hover {
 }
 .form-control{
 	color: #f9f9f9d9;
-    margin-left: 20px;
+    margin-left: 20px !important;
     background-color: var(--hover-menu-bg);
     border-radius: 6px;
     height: 32px;
     outline: none;
     border: 2px solid #373b6869;
     padding: 0 10px;
-	margin: auto;
+	/* margin: auto; */
 }
 .input-group{
 	display: flex;
